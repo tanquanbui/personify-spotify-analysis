@@ -29,29 +29,31 @@ function Login() {
       setToken(token)
 
   }, [])
-  const renderArtists = () => {
-    return artists.map(art => (
-        <div className="wrapper">
-          {art.album.name}
-          {art.album.artists.name}
-          <img src={art.album.images[0].url}></img>
-          {art.popularity}
-        </div>
-    ))
-}
+//   const renderArtists = () => {
+//     return artists.map(art => (
+//         <div className="wrapper">
+//           {art.album.name}
+//           {art.artists[0].name}
+//           {art.artists[1].name}
+//           <img src={art.album.images[0].url}></img>
+//           {art.popularity}
+//         </div>
+//     ))
+// }
   const logout = () => {
       setToken("")
       window.localStorage.removeItem("token")
   }
   const searchArtists = async (e) => {
     e.preventDefault()
-    const {data} = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=100&offset=5", {
+    const {data} = await axios.get("https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=100&offset=5", {
         headers: {
             Authorization: `Bearer ${token}`
         },
     })
     setArtists(data.items)
     console.log(artists)
+
 }
 
   return (
@@ -66,7 +68,7 @@ function Login() {
     <input type="text" onChange={e => setSearchKey(e.target.value)}/>
     <button type={"submit"}>Search</button>
 </form>
-{renderArtists()}
+{/* {renderArtists()} */}
           </header>
       </div>
   );
