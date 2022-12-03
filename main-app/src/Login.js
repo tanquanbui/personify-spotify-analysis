@@ -14,11 +14,14 @@ function Login() {
   const [artists, setArtists] = useState([])
   console.log(artists)
   console.log(token)
-
+  const cleaner = (arr) => 
+{
+	const array = arr.map(solo => solo.name)
+	return array.join(', ')
+}
   useEffect(() => {
       const hash = window.location.hash
       let token = window.localStorage.getItem("token")
-
       if (!token && hash) {
           token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
 
@@ -29,24 +32,24 @@ function Login() {
       setToken(token)
 
   }, [])
-//   const renderArtists = () => {
-//     return artists.map(art => (
-//         <div className="wrapper">
-//           {art.album.name}
-//           {art.artists[0].name}
-//           {art.artists[1].name}
-//           <img src={art.album.images[0].url}></img>
-//           {art.popularity}
-//         </div>
-//     ))
-// }
+  const renderArtists = () => {
+    return artists.map(art => (
+        <div className="wrapper">
+            {Array.isArray(art.artists) && art.artists ?
+					<h3>{cleaner(art.artists)}</h3>
+					:
+					<h3>{art.artists}</h3>
+				}
+        </div>
+    ))
+}
   const logout = () => {
       setToken("")
       window.localStorage.removeItem("token")
   }
   const searchArtists = async (e) => {
     e.preventDefault()
-    const {data} = await axios.get("https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=100&offset=5", {
+    const {data} = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=100&offset=5", {
         headers: {
             Authorization: `Bearer ${token}`
         },
@@ -68,7 +71,7 @@ function Login() {
     <input type="text" onChange={e => setSearchKey(e.target.value)}/>
     <button type={"submit"}>Search</button>
 </form>
-{/* {renderArtists()} */}
+{renderArtists()}
           </header>
       </div>
   );
