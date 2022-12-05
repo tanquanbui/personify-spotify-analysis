@@ -2,7 +2,7 @@ import React from "react";
 import {useEffect, useState} from "react"
 import axios from "axios";
 import "./Login.css";
-
+import {getUsersTopArtists, getUsersTopArtistsSinceWeeks, getUsersTopArtistsSinceAnYear, getUsersTopTracks} from './spotify-api';
 function Login() {
   const CLIENT_ID = "7f112c4cfe524c218620897ff68ecfc6"
   const REDIRECT_URI = "http://localhost:3000"
@@ -35,11 +35,15 @@ function Login() {
   const renderArtists = () => {
     return artists.map(art => (
         <div className="wrapper">
+            <img src={art.album.images[0].url}></img>
+            <div>
+            {art.name}
             {Array.isArray(art.artists) && art.artists ?
 					<h3>{cleaner(art.artists)}</h3>
 					:
 					<h3>{art.artists}</h3>
-				}
+			}
+            </div>
         </div>
     ))
 }
@@ -47,17 +51,30 @@ function Login() {
       setToken("")
       window.localStorage.removeItem("token")
   }
-  const searchArtists = async (e) => {
-    e.preventDefault()
-    const {data} = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=100&offset=5", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
-    })
-    setArtists(data.items)
-    console.log(artists)
+//   useEffect(() => 
+//   {
+//       getUsersTopTracks().then(res =>setArtists(res.data.items))		
 
-}
+//   }, [])
+//   const bringWeeks = (e) => 
+// 	{
+//             .then(res =>setArtists(res.data.items))	
+// 	}
+// const searchArtists2 = () => {
+//     const {data} = 
+//     setArtists(data)
+//     console.log(artists)
+// }
+// const searchArtists3 = async () => {
+//     const {data} = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=30&offset=0", {
+//         headers: {
+//             Authorization: `Bearer ${token}`
+//         },
+//     })
+//     setArtists(data.items)
+//     console.log(artists)
+
+// }
 
   return (
       <div className="App">
@@ -67,11 +84,9 @@ function Login() {
                   <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state%20user-top-read`}>Login
                       to Spotify</a>
                   : <button onClick={logout}>Logout</button>}
-                  <form onSubmit={searchArtists}>
-    <input type="text" onChange={e => setSearchKey(e.target.value)}/>
-    <button type={"submit"}>Search</button>
-</form>
+
 {renderArtists()}
+
           </header>
       </div>
   );
