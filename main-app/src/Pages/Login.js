@@ -1,8 +1,6 @@
 import React from "react";
 import {useEffect, useState} from "react"
 import axios from "axios";
-import "./Login.css";
-import {getUsersTopArtists, getUsersTopArtistsSinceWeeks, getUsersTopArtistsSinceAnYear, getUsersTopTracks} from './spotify-api';
 function Login() {
   const CLIENT_ID = "7f112c4cfe524c218620897ff68ecfc6"
   const REDIRECT_URI = "http://localhost:3000"
@@ -56,10 +54,6 @@ function Login() {
     searchArtists3();
 
   }, [])
-  const bringWeeks = (e) => 
-	{
-            getUsersTopTracks().then(res =>setArtists(res.data.items))	
-	}
 // const searchArtists2 = () => {
 //     const {data} = 
 //     setArtists(data)
@@ -75,18 +69,25 @@ const searchArtists3 = async () => {
     console.log(artists)
 
 }
+const searchArtists2 = async () => {
+    const {data} = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=30&offset=0", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    })
+    setArtists(data.items)
+    console.log(artists)
+
+}
 
   return (
       <div className="App">
           <header className="App-header">
               <h1>Spotify React</h1>
               {!token ?
-                  <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state%20user-top-read`}>Login
+                    <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state%20user-top-read`}>Login
                       to Spotify</a>
                   : <button onClick={logout}>Logout</button>}
-                  <button onClick={searchArtists3}></button>
-{renderArtists()}
-
           </header>
       </div>
   );
