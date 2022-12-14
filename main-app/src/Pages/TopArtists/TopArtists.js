@@ -41,7 +41,7 @@ function TopArtists() {
     
     return(
         <div>TopArtists<button onClick={DisplayArtistLong}>Cum</button>
-        <Cards datas={artists}/>
+        <Cards datas={artists} type="tracks"/>
         </div>
     )
 }   

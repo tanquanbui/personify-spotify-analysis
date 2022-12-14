@@ -1,0 +1,50 @@
+.outside {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+.card {
+    width: 15vw;
+    height: 50vh;
+    display: grid;
+    justify-content: center;
+    background-color: aqua;
+    margin-top: 1em;
+
+}
+.cardinside {
+    width: 80%;
+    display: grid;
+    justify-items: center;
+    margin: auto;
+    padding: 1em;
+}
+h1 {
+    font-size: 1em;
+}
+img {
+    width: 50%;
+    margin: auto;
+    padding: 3em;
+    background-color: beige;
+}
+.titles {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 50%;
+}
+.titles h1 {
+    text-align: center;
+  display: flex; /* added this line*/
+  align-items: center;
+  font-size: 1.3em;
+  background-color: white;
+}
+.titles h3 {
+    text-align: center;
+  display: flex; /* added this line*/
+  align-items: center;
+}
