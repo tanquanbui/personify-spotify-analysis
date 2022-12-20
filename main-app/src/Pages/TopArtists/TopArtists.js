@@ -1,14 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import Cards from "../../components/Cards";
+import Cards from "../components/Cards";
+import Layout from "../Layout";
 function TopArtists() {
     const [token, setToken] = useState("");
     const [artists, setArtists] = useState([]);
     useEffect(()=> {
     const accessTokenObj = localStorage.getItem("token");
     setToken(accessTokenObj);
-    })
+    },[])
     
     const DisplayArtistLong = async () => {
         const {data} = await axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=30&offset=0", {
@@ -40,7 +41,9 @@ function TopArtists() {
     }
     
     return(
-        <div>TopArtists<button onClick={DisplayArtistLong}>Cum</button>
+        <div>
+        <Layout></Layout>
+        <button onClick={DisplayArtistLong}></button>
         <Cards datas={artists} type="tracks"/>
         </div>
     )

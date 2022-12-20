@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Home from './Pages/Login';
+import Home from './Pages/App';
 import Layout from './Pages/Layout';
 import TopArtists from './Pages/TopArtists/TopArtists';
 import TopTracks from './Pages/TopTracks/TopTracks';
@@ -13,7 +13,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/">
           <Route index element={<Home />} />
           <Route path="topartists" element={<TopArtists />} />
           <Route path="toptracks" element={< TopTracks/>} />

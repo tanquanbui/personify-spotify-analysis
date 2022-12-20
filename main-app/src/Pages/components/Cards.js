@@ -1,5 +1,5 @@
 import React from "react";
-import '../Styles/Cards.css'
+import '../../Styles/Cards.css'
 function Cards(props) {
     const datas = props.datas;
     const cleaner = (arr) => 

@@ -1,10 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+import '../Styles/App.css';
 import React from 'react';
-import Login from './Login';
-import {token as accessToken} from './spotify-api'
-import {QueryClient, QueryClientProvider} from 'react-query'
 import {useEffect, useState} from 'react';
+import axios from 'axios';
+import Layout from './Layout';
+import User from './components/User';
 function App() {
   const CLIENT_ID = "7f112c4cfe524c218620897ff68ecfc6"
   const REDIRECT_URI = "http://localhost:3000"
@@ -12,9 +11,8 @@ function App() {
   const RESPONSE_TYPE = "token"
 
   const [token, setToken] = useState("");
-  const [searchKey, setSearchKey] = useState("")
-  const [artists, setArtists] = useState([])
-  console.log(artists)
+  const [user, setUser] = useState([]);
+  const [img, setImg] = useState("");
   console.log(token)
   useEffect(() => {
       const hash = window.location.hash
@@ -27,8 +25,24 @@ function App() {
       }
       console.log(token)
       setToken(token)
+      
 
   }, [])
+  useEffect(()=>{
+    getUserInfo();
+  },[token])
+  const getUserInfo = async () => {
+    const {data} = await axios.get("https://api.spotify.com/v1/me", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    })
+    setUser(data)
+    console.log(data.images[0].url);
+    setImg(data.images[0].url)
+
+
+}
   const logout = () => {
     setToken("")
     window.localStorage.removeItem("token")
@@ -36,11 +50,19 @@ function App() {
   return (
     <div className="App">
        <header className="App-header">
-              <h1>Spotify React</h1>
+             
               {!token ?
-                    <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state%20user-top-read`}>Login
+                    <div>
+                      <h1>spotify lol</h1>
+                    <a className='login' href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state%20user-top-read`}>Login
                       to Spotify</a>
-                  : <button onClick={logout}>Logout</button>}
+                      </div>
+                  : <div className='main'> 
+                  <User info={user} images={img}></User>
+                  <Layout></Layout>
+                  <button className='logout' onClick={logout}>Logout</button>
+                  </div>}
+                  
           </header>
     </div>
   );

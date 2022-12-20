@@ -9,7 +9,6 @@
     height: 50vh;
     display: grid;
     justify-content: center;
-    background-color: aqua;
     margin-top: 1em;
 
 }
@@ -24,10 +23,10 @@ h1 {
     font-size: 1em;
 }
 img {
-    width: 50%;
+    width: 70%;
     margin: auto;
-    padding: 3em;
-    background-color: beige;
+
+    border-radius: 50%;
 }
 .titles {
     display: flex;
