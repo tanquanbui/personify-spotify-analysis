@@ -6,7 +6,9 @@ import Layout from './Layout';
 import User from './components/User';
 function App() {
   const CLIENT_ID = "7f112c4cfe524c218620897ff68ecfc6"
-  const REDIRECT_URI = "https://main--tourmaline-bonbon-a67bd3.netlify.app/"
+  const REDIRECT_URI = process.env.NODE_ENV !== 'production'
+  ? 'http://localhost:3000'
+  : 'https://spotifyprofilechecker.netlify.app/'
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
 
