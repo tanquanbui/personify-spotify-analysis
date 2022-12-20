@@ -9,6 +9,7 @@ const User = (props) => {
         <div className="user">
             <img className="img" src={props.images}></img>
             <h1 className="username">{info.display_name}</h1>
+            <h1 className="username">{info.follower}</h1>
         </div>
     )
 }
