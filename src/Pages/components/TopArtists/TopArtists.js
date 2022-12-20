@@ -1,14 +1,14 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import Cards from "../components/Cards";
-import Layout from "../Layout";
+import Cards from "../Cards";
 function TopArtists() {
     const [token, setToken] = useState("");
     const [artists, setArtists] = useState([]);
     useEffect(()=> {
     const accessTokenObj = localStorage.getItem("token");
     setToken(accessTokenObj);
+    DisplayArtistLong();
     },[])
     
     const DisplayArtistLong = async () => {
@@ -42,8 +42,6 @@ function TopArtists() {
     
     return(
         <div>
-        <Layout></Layout>
-        <button onClick={DisplayArtistLong}></button>
         <Cards datas={artists} type="tracks"/>
         </div>
     )

@@ -1,12 +1,12 @@
 .outside {
-    width: 100%;
+    width: 70%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
+    margin: auto;
 }
 .card {
-    width: 15vw;
-    height: 50vh;
+    height: 35vh;
     display: grid;
     justify-content: center;
     margin-top: 1em;
@@ -23,7 +23,7 @@ h1 {
     font-size: 1em;
 }
 img {
-    width: 70%;
+    width: 60%;
     margin: auto;
 
     border-radius: 50%;
@@ -40,10 +40,11 @@ img {
   display: flex; /* added this line*/
   align-items: center;
   font-size: 1.3em;
-  background-color: white;
+  font-weight: 700;
 }
 .titles h3 {
     text-align: center;
   display: flex; /* added this line*/
   align-items: center;
+  font-weight: 300;
 }

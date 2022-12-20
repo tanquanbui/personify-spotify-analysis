@@ -1,5 +1,5 @@
 .img {
-    width: 40%;
+    width: 10%;
     background:none;
     border-radius: 50%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -12,13 +12,4 @@
     display: grid;
     justify-items: center;
     width: 100%;
-}
-.login {
-    text-decoration: none;
-    color: black;
-    padding: 3em;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.login:hover {
-    font-size: 3em;
 }
