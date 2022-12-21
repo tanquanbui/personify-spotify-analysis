@@ -11,14 +11,14 @@ export const headers = {
 export const getUser = () => axios.get('https://api.spotify.com/v1/me', { headers })
 
 export const getUsersTop5Artists = () => axios.get('https://api.spotify.com/v1/me/top/artists?limit=9&time_range=long_term', {headers})
-export const getUsersTopArtists = () => axios.get('https://api.spotify.com/v1/me/top/artists?limit=30', {headers})
-export const getUsersTopArtistsSinceWeeks = () => axios.get('https://api.spotify.com/v1/me/top/artists?limit=20&time_range=short_term', {headers})
-export const getUsersTopArtistsSinceAnYear = () => axios.get('https://api.spotify.com/v1/me/top/artists?limit=20&time_range=long_term', {headers})
+export const getUsersTopArtists = () => (axios.get('https://api.spotify.com/v1/me/top/artists?limit=15', {headers}))
+export const getUsersTopArtistsSinceWeeks = () => axios.get('https://api.spotify.com/v1/me/top/artists?limit=15&time_range=short_term', {headers})
+export const getUsersTopArtistsSinceAnYear = () => axios.get('https://api.spotify.com/v1/me/top/artists?limit=15&time_range=long_term', {headers})
 
 export const getUsersTop5Tracks = () => axios.get('https://api.spotify.com/v1/me/top/tracks?limit=9&time_range=long_term&limit=4', {headers})
-export const getUsersTopTracks = () => axios.get('https://api.spotify.com/v1/me/top/tracks?limit=30', {headers})
-export const getUsersTopTracksSinceWeeks = () => axios.get('https://api.spotify.com/v1/me/top/tracks?limit=20&time_range=short_term', {headers})
-export const getUsersTopTracksSinceAnYear = () => axios.get('https://api.spotify.com/v1/me/top/tracks?limit=20&time_range=long_term', {headers})
+export const getUsersTopTracks = () => axios.get('https://api.spotify.com/v1/me/top/tracks?limit=9', {headers})
+export const getUsersTopTracksSinceWeeks = () => axios.get('https://api.spotify.com/v1/me/top/tracks?limit=9&time_range=short_term', {headers})
+export const getUsersTopTracksSinceAnYear = () => axios.get('https://api.spotify.com/v1/me/top/tracks?limit=15&time_range=long_term', {headers})
 
 export const getFollowing = () => axios.get('https://api.spotify.com/v1/me/following?type=artist', { headers })
 

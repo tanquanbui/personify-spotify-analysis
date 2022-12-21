@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import User from './components/User';
 import TopArtists from './components/TopArtists/TopArtists';
-import { getUsersTopArtists, getUsersTopTracks, getUsersTopTracksSinceWeeks } from './components/ApiCalls';
+import { getUsersTopArtists, getUsersTopTracks, getUsersTopTracksSinceWeeks,getUsersTopTracksSinceAnYear } from './components/ApiCalls';
 import Cards from './components/Cards';
 function App() {
   const CLIENT_ID = "7f112c4cfe524c218620897ff68ecfc6"
@@ -13,14 +13,10 @@ function App() {
   : 'https://spotifyprofilechecker.netlify.app/'
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
-  useEffect(()=>{
-    window.addEventListener("scroll",()=>{
-      setHeight(window.scrollY)
-    })
-  },[])
   const [height, setHeight] = useState();
   const [tracks, setTracks] = useState([]);
   const [tracksWeekly, setTracksWeekly] = useState([]);
+  const [tracksYearly, setTracksYearly] = useState([]);
   const [token, setToken] = useState("");
   const [user, setUser] = useState([]);
   const [img, setImg] = useState("");
@@ -45,6 +41,8 @@ function App() {
   const start =()=>{
     getUsersTopTracks().then(res =>setTracks(res.data.items))
     getUsersTopTracksSinceWeeks().then(res => setTracksWeekly(res.data.items))
+    getUsersTopTracksSinceAnYear().then(res => setTracksYearly(res.data.items))
+
   }
   const getUserInfo = async () => {
     const {data} = await axios.get("https://api.spotify.com/v1/me", {
@@ -75,13 +73,16 @@ function App() {
                       <User info={user} images={img}></User>
                       {height}
                       <button className='logout' onClick={logout}>Logout</button>
+                      <button onClick={start}>click for your journey to discover your spotify</button>
                   </div>
-                  <button onClick={start}>click for your journey to discover your spotify</button>
                   <div className='section'>
                   <Cards datas={tracks} type="tracks"/>
                   </div>
                   <div className='section'>
                   <Cards datas={tracksWeekly} type="tracks"/>
+                  </div>
+                  <div className='section'>
+                  <Cards datas={tracksYearly} type="tracks"/>
                   </div>
                   </div>}
                   

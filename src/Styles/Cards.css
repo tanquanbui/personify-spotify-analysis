@@ -1,21 +1,18 @@
 .outside {
-    width: 70%;
+    width: 90%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
     margin: auto;
 }
 .card {
-    height: 35vh;
-    display: grid;
-    justify-content: center;
+    height: 30vh;
     margin-top: 1em;
 
 }
 .cardinside {
-    width: 80%;
     display: grid;
-    justify-items: center;
+    grid-template-columns: 1fr 1fr;
     margin: auto;
     padding: 1em;
 }
@@ -23,28 +20,23 @@ h1 {
     font-size: 1em;
 }
 img {
-    width: 60%;
+    width: 80%;
     margin: auto;
-
-    border-radius: 50%;
 }
 .titles {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 50%;
+    width: 100%;
 }
 .titles h1 {
-    text-align: center;
-  display: flex; /* added this line*/
-  align-items: center;
-  font-size: 1.3em;
-  font-weight: 700;
+    text-align: left;
+  font-size: 1.7em;
+  font-weight: 600;
 }
 .titles h3 {
-    text-align: center;
-  display: flex; /* added this line*/
-  align-items: center;
-  font-weight: 300;
+    text-align: left;
+    font-size: 1.4em;
+  font-weight: 250;
+}
+.titletext {
+    display: grid;
+    justify-items: center;
 }
