@@ -4,7 +4,6 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import User from './components/User';
 import TopArtists from './components/TopArtists/TopArtists';
-import { getUsersTopArtists, getUsersTopTracks, getUsersTopTracksSinceWeeks,getUsersTopTracksSinceAnYear } from './components/ApiCalls';
 import Cards from './components/Cards';
 function App() {
   const CLIENT_ID = "7f112c4cfe524c218620897ff68ecfc6"
@@ -37,21 +36,43 @@ function App() {
   }, [])
   useEffect(()=>{
     getUserInfo();
+    getUsersTopTracksSinceAnYear();
+    getUsersTopTracksSinceWeeks();
   },[token])
-  const start =()=>{
-    getUsersTopTracks().then(res =>setTracks(res.data.items))
-    getUsersTopTracksSinceWeeks().then(res => setTracksWeekly(res.data.items))
-    getUsersTopTracksSinceAnYear().then(res => setTracksYearly(res.data.items))
-
-  }
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+}
   const getUserInfo = async () => {
-    const {data} = await axios.get("https://api.spotify.com/v1/me", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
-    })
+    const {data} = await axios.get("https://api.spotify.com/v1/me", {headers})
     setUser(data)
     setImg(data.images[0].url)
+}
+const getUsersTop5Artists = async () => {
+   const {data} = await axios.get('https://api.spotify.com/v1/me/top/artists?limit=9&time_range=long_term', {headers})
+}
+const getUsersTopArtists = async () => {
+   const {data} = await axios.get('https://api.spotify.com/v1/me/top/artists?limit=15', {headers})
+}
+const getUsersTopArtistsSinceWeeks = async () => {
+   const {data} = await axios.get('https://api.spotify.com/v1/me/top/artists?limit=15&time_range=short_term', {headers})
+}
+const getUsersTopArtistsSinceAnYear = async () => {
+   const {data} = await axios.get('https://api.spotify.com/v1/me/top/artists?limit=15&time_range=long_term', {headers})
+}
+const getUsersTop5Tracks = async () => {
+   const {data} = await axios.get('https://api.spotify.com/v1/me/top/tracks?limit=9&time_range=long_term&limit=4', {headers})
+}
+const getUsersTopTracks = async () => {
+   const {data} = await axios.get('https://api.spotify.com/v1/me/top/tracks?limit=9', {headers})
+}
+const getUsersTopTracksSinceWeeks = async () => {
+   const {data} = await axios.get('https://api.spotify.com/v1/me/top/tracks?limit=9&time_range=short_term', {headers})
+   setTracksWeekly(data.items)
+}
+const getUsersTopTracksSinceAnYear = async () => {
+   const {data} = await axios.get('https://api.spotify.com/v1/me/top/tracks?limit=15&time_range=long_term', {headers})
+   setTracksYearly(data.items)
 }
   const logout = () => {
     setToken("")
@@ -73,7 +94,6 @@ function App() {
                       <User info={user} images={img}></User>
                       {height}
                       <button className='logout' onClick={logout}>Logout</button>
-                      <button onClick={start}>click for your journey to discover your spotify</button>
                   </div>
                   <div className='section'>
                   <Cards datas={tracks} type="tracks"/>
