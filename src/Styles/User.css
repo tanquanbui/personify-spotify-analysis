@@ -9,6 +9,8 @@
     font-size: 2em;
 }
 .user {
+    opacity: 1;
+    display: hidden;
     display: grid;
     justify-items: center;
     width: 100%;

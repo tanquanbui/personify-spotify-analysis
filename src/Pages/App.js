@@ -37,8 +37,20 @@ function App() {
   useEffect(()=>{
     getUserInfo();
     getUsersTopTracksSinceAnYear();
+    getUsersTopTracks();
     getUsersTopTracksSinceWeeks();
   },[token])
+  useEffect(()=>{
+    var toppage = document.getElementsByClassName('tracks');
+    window.addEventListener('scroll', ()=>{
+      if(window.scrollY > 1000){
+        document.getElementsByClassName('background').className.add("fixed")
+      }
+    console.log(window.scrollY)
+
+    })
+    
+  })
   const headers = {
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',
@@ -64,7 +76,8 @@ const getUsersTop5Tracks = async () => {
    const {data} = await axios.get('https://api.spotify.com/v1/me/top/tracks?limit=9&time_range=long_term&limit=4', {headers})
 }
 const getUsersTopTracks = async () => {
-   const {data} = await axios.get('https://api.spotify.com/v1/me/top/tracks?limit=9', {headers})
+   const {data} = await axios.get('https://api.spotify.com/v1/me/top/tracks?limit=30', {headers})
+   setTracks(data.items)
 }
 const getUsersTopTracksSinceWeeks = async () => {
    const {data} = await axios.get('https://api.spotify.com/v1/me/top/tracks?limit=9&time_range=short_term', {headers})
@@ -90,20 +103,28 @@ const getUsersTopTracksSinceAnYear = async () => {
                       </div>
                   : 
                   <div className='main'> 
-                  <div className='section'>
+                  
+                 
+                    <div className='section'>
                       <User info={user} images={img}></User>
-                      {height}
-                      <button className='logout' onClick={logout}>Logout</button>
-                  </div>
-                  <div className='section'>
-                  <Cards datas={tracks} type="tracks"/>
-                  </div>
-                  <div className='section'>
-                  <Cards datas={tracksWeekly} type="tracks"/>
-                  </div>
-                  <div className='section'>
-                  <Cards datas={tracksYearly} type="tracks"/>
-                  </div>
+                     <button className='logout' onClick={logout}>Logout</button>
+                    </div> <div className='background'> <h1>ALL TIME</h1></div>
+                    <div className='section'>
+                      
+                    </div>
+                   
+                        <div className='section tracks'>
+                        <Cards datas={tracks} type="tracks"/>
+                        </div>
+                        <div className='section'>
+                    </div>
+                        <div className='background fixed'> <h1>WEEKLY</h1></div>
+                        <div className='section'>
+                        <Cards datas={tracksWeekly} type="tracks"/>
+                        </div>
+                        <div className='section'>
+                        <Cards datas={tracksYearly} type="tracks"/>
+                        </div>
                   </div>}
                   
           </header>
