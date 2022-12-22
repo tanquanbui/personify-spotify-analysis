@@ -40,17 +40,17 @@ function App() {
     getUsersTopTracks();
     getUsersTopTracksSinceWeeks();
   },[token])
-  useEffect(()=>{
-    var toppage = document.getElementsByClassName('tracks');
-    window.addEventListener('scroll', ()=>{
-      if(window.scrollY > 1000){
-        document.getElementsByClassName('background').className.add("fixed")
-      }
-    console.log(window.scrollY)
+  // useEffect(()=>{
+  //   var toppage = document.getElementsByClassName('tracks');
+  //   window.addEventListener('scroll', ()=>{
+  //     if(window.scrollY > 1000){
+  //       document.getElementsByClassName('background').className.add("fixed")
+  //     }
+  //   console.log(window.scrollY)
 
-    })
+  //   })
     
-  })
+  // })
   const headers = {
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',
@@ -103,27 +103,25 @@ const getUsersTopTracksSinceAnYear = async () => {
                       </div>
                   : 
                   <div className='main'> 
-                  
+                   <div className='background'> <h1>ALL TIME</h1></div>
                  
                     <div className='section'>
                       <User info={user} images={img}></User>
-                     <button className='logout' onClick={logout}>Logout</button>
-                    </div> <div className='background'> <h1>ALL TIME</h1></div>
-                    <div className='section'>
-                      
-                    </div>
+
+                    </div> 
+                    <div className='section tracks'></div>
+                   
                    
                         <div className='section tracks'>
                         <Cards datas={tracks} type="tracks"/>
                         </div>
-                        <div className='section'>
-                    </div>
                         <div className='background fixed'> <h1>WEEKLY</h1></div>
                         <div className='section'>
                         <Cards datas={tracksWeekly} type="tracks"/>
                         </div>
                         <div className='section'>
                         <Cards datas={tracksYearly} type="tracks"/>
+                        <button className='logout' onClick={logout}>Logout</button>
                         </div>
                   </div>}
                   

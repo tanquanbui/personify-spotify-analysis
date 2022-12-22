@@ -32,8 +32,7 @@
 .section:nth-child(0){
   width: 100%;
   min-height: 100vh;
-  
-
+  background-color: rgba(50, 50, 50, 1);
 }
 .section:nth-child(2){
   width: 100%;
@@ -43,9 +42,14 @@
   color: white;
 
 }
-.section:nth-child(3){
-}
 .section:nth-child(4){
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgba(50, 50, 50, 0.5);
+  backdrop-filter: blur(10px);
+  color: white;
+}
+.section:nth-child(5){
   backdrop-filter: blur(10px);
   background-color: rgba(150, 150, 150, 0.8);
 }
@@ -62,4 +66,5 @@
   justify-items: center;
   align-items: center;
   font-size: 30em;
+  position: fixed;
 }
