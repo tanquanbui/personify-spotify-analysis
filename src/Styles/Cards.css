@@ -1,40 +1,51 @@
 .outside {
     width: 90%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     margin: auto;
 }
 .card {
-    height: 30vh;
-    margin-top: 1em;
-
+    margin-top: 2em;
 }
 .cardinside {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    width:80%;
     margin: auto;
-    padding: 1em;
-}
-h1 {
-    font-size: 1em;
+    padding: 2em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: rgba(240,240,240,0.8);
+    backdrop-filter: blur(5px);
+    border-radius:0.5em;
 }
 img {
-    width: 80%;
-    margin: auto;
+    width: 100%;
+
+}
+.expand {
+    width: 75vw;
+    padding: 2em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: rgba(240,240,240,0.8);
+    backdrop-filter: blur(5px);
+    border-radius:2em;
+}
+.expand img {
+    width: 40%;
 }
 .titles {
     width: 100%;
 }
 .titles h1 {
     text-align: left;
-  font-size: 1.7em;
+  font-size: 2em;
   font-weight: 600;
 }
 .titles h3 {
     text-align: left;
-    font-size: 1.4em;
-  font-weight: 250;
+    font-size: 1em;
+  font-weight: 450;
 }
 .titletext {
     display: grid;
