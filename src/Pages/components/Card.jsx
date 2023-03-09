@@ -1,12 +1,14 @@
 import '../../Styles/Cards.css'
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from "react";
+import Stats from './Stats';
 const Card =(props)=>{
     const [isOpen, setIsOpen] = useState(false);
     const image = props.image;
     const name = props.name
     const artists = props.artists;
     const id = props.id;
+    const token = props.token;
     const cleaner = (arr) => 
     {
         const array = arr.map(solo => solo.name)
@@ -28,17 +30,24 @@ const Card =(props)=>{
     return(
         <motion.div
         transition={{layout: {duration:1, type:"spring"}}}
+        animate={{
+            type:"spring"
+        }}
+        
         layout="position" onClick={()=> setIsOpen(!isOpen)}
         >
             {!isOpen && (
+                <AnimatePresence>
                 <motion.div className="cardinside"initial={{
-            scale:0.8
         }}
         whileHover={{
-            scale:1
+            scale:1.2
         }}
         animate={{
             type:"spring"
+        }}
+        transition={{
+            duration:1
         }}>
                 <img src={image}></img>
                         <div className="titletext">
@@ -53,11 +62,17 @@ const Card =(props)=>{
                             </div>
                         </div>
                     </motion.div>
+                </AnimatePresence>
             )}
             {isOpen && (
+                <AnimatePresence>
                 <motion.div className='expand'
-                transition={{ delay: 1 }}
-                >
+                animate={{
+                    type:"spring"
+                }}
+                transition={{
+                    duration:0.5
+                }}>
                     <img src={image}></img>
                         <div className="titletext">
                             <div className="titles">
@@ -69,8 +84,10 @@ const Card =(props)=>{
                                     <h3>{artists}</h3>
                             }
                             </div>
+                            <Stats token={token} songid={id}></Stats>
                         </div>
                 </motion.div>
+                </AnimatePresence>
             )}
                     
                     </motion.div>

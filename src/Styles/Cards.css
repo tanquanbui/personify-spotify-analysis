@@ -8,22 +8,25 @@
     margin: auto;
 }
 .card {
-    margin-top: 2em;
+
 }
 .cardinside {
-    width:80%;
+    
+    width:50%;
     margin: auto;
     padding: 2em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background: rgba(240,240,240,0.8);
     backdrop-filter: blur(5px);
     border-radius:0.5em;
+    margin-top: 5em;
 }
 img {
     width: 100%;
 
 }
 .expand {
+    margin-top: 5em;
     width: 75vw;
     padding: 2em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -32,7 +35,7 @@ img {
     border-radius:2em;
 }
 .expand img {
-    width: 40%;
+    width: 30%;
 }
 .titles {
     width: 100%;

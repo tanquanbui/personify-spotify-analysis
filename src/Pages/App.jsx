@@ -42,7 +42,10 @@ function App() {
     }
     catch(err){
       console.log(err);
-      logout();
+      if(err == "401"){
+        setToken("")
+    window.localStorage.removeItem("token")
+      }
     };
     
   },[token])
