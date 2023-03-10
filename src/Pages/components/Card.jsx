@@ -1,6 +1,6 @@
 import '../../Styles/Cards.css'
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from "react";
+import React, { useState } from "react";
 import Stats from './Stats';
 const Card =(props)=>{
     const [isOpen, setIsOpen] = useState(false);

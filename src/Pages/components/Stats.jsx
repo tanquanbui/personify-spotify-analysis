@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 const Stats =(props)=>{
     const [token, setToken] = useState("");
     const [artists, setArtists] = useState([]);
@@ -23,8 +23,7 @@ const Stats =(props)=>{
         DisplayArtistLong()
     },[token])
     return(
-        <div>{artists.energy}
-        </div>
+        <div></div>
     )
 }
 export default Stats;

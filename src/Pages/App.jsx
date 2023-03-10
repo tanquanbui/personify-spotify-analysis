@@ -1,7 +1,7 @@
 import '../Styles/App.css';
 import React from 'react';
 import {useEffect, useState} from 'react';
-import axios from 'axios';
+import axios from 'axios'
 import User from './components/User';
 import TopArtists from './components/TopArtists/TopArtists';
 import Cards from './components/Cards';
