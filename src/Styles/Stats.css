@@ -1,0 +1,14 @@
+.genres{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.genre{
+    background-color: cyan;
+    border-radius: 20%;
+    padding: 10px;
+    margin-left: 100px;
+}

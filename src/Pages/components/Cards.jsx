@@ -18,7 +18,7 @@ function Cards(props) {
         return(
             <div className="outside">
          {datas.map((art) => (
-                    <Card token={token} image={art.album.images[0].url} name={art.name} id={art.id} artists={art.artists}></Card>
+                    <Card token={token} image={art.album.images[0].url} name={art.name} id={art.id} artists={art.artists} apilink={art.artists[0].id}></Card>
 
             ))}
             </div>

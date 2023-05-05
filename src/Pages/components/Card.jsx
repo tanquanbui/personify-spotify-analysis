@@ -8,6 +8,7 @@ const Card =(props)=>{
     const name = props.name
     const artists = props.artists;
     const id = props.id;
+    const apilink = props.apilink
     const token = props.token;
     const cleaner = (arr) => 
     {
@@ -47,7 +48,7 @@ const Card =(props)=>{
             type:"spring"
         }}
         transition={{
-            duration:1
+            duration:0.6
         }}>
                 <img src={image}></img>
                         <div className="titletext">
@@ -73,19 +74,21 @@ const Card =(props)=>{
                 transition={{
                     duration:0.5
                 }}>
+                    <div className='expand'>
                     <img src={image}></img>
+                    
+                    
+                    <Stats token={token} songid={id} apilink={apilink} ></Stats>
                         <div className="titletext">
-                            <div className="titles">
                             <h1>{name}</h1>
-                            <h3>{id}</h3>
-                            {Array.isArray(artists) && artists ?
+                           {Array.isArray(artists) && artists ?
                                     <h3>{cleaner(artists)}</h3>
                                     :
                                     <h3>{artists}</h3>
-                            }
-                            </div>
-                            <Stats token={token} songid={id}></Stats>
-                        </div>
+                    } 
+                            
+                        </div></div>
+                    
                 </motion.div>
                 </AnimatePresence>
             )}
