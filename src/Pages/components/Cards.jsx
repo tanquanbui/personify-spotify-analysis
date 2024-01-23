@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import '../../Styles/Cards.css'
 import { useState,useEffect } from "react";
 import Card from "./Card";
@@ -9,27 +8,31 @@ function Cards(props) {
     const [token, setToken] = useState("");
     useEffect(()=> {
         const accessTokenObj = localStorage.getItem("token");
-        setToken(accessTokenObj);
+        setToken(accessTokenObj);   
         },[])
     console.log(token)
     console.log(datas)
-   
-    if(props.type === "tracks"){
-        return(
-            <div className="outside">
-         {datas.map((art) => (
-                    <Card token={token} image={art.album.images[0].url} name={art.name} id={art.id} artists={art.artists} apilink={art.artists[0].id}></Card>
-
-            ))}
-            </div>
-            )
+    if(!datas){
+        return <div></div>
     }
+    else{
+        if(props.type === "tracks"){
+            return(
+                <div className="outside">
+             {datas.map((art) => (
+                        <Card token={token} image={art.album.images[0].url} name={art.name} id={art.id} artists={art.artists} apilink={art.artists[0].id}></Card>
     
-    if(props.type === "artists"){
-        return(
-            <div></div>
-        )
-
+                ))}
+                </div>
+                )
+        }
+        
+        if(props.type === "artists"){
+            return(
+                <div></div>
+            )
+    
+        }
     }
     }
 export default Cards;
