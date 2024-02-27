@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import "../../Styles/Stats.css";
+import ArtistInfo from "./ArtistInfo";
 
 const Stats = (props) => {
   const [token, setToken] = useState("");
@@ -11,7 +12,7 @@ const Stats = (props) => {
   useEffect(() => {
     setToken(localStorage.getItem("token"));
   }, []);
-
+  
   useEffect(() => {
     const getArtist = async () => {
       if (token) {
@@ -35,6 +36,7 @@ const Stats = (props) => {
               <p>{genre}</p>
             </div>
           ))}
+          <ArtistInfo artist={artist} />
         </div>
       )}
     </div>

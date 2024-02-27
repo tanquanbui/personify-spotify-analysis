@@ -135,8 +135,8 @@ function App() {
       ) : (
         <div>
           <button className="login" onClick={handleLogin}>
-            Log in with Spotify
-          </button>
+            Log in with Spotinpfy
+          </button> 
         </div>
       )}
     </div>
