@@ -1,4 +1,3 @@
-import { Express } from "express";
 const express = new Express();
 const app = express();
 app.get("/", (req, res) => {
