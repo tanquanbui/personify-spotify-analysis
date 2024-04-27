@@ -46,7 +46,6 @@ const Card = (props) => {
               }}
               initial={{}}
             >
-              <div className="expanded">
                 <img src={image} alt={name}></img>
                 <div className="titletext">
                   <h1>{name}</h1>
@@ -55,7 +54,6 @@ const Card = (props) => {
                   ) : (
                     <h3>{artists}</h3>
                   )}
-                </div>
                 <Stats token={token} songid={id} apilink={apilink} />
               </div>
             </motion.div>
