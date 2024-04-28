@@ -8,7 +8,7 @@ import User from './components/User';
 import Cards from './components/Cards';
 import '../Styles/App.css';
 import axios from 'axios';
-import { getUser,getUsersTopArtists,getUsersTopTracks } from './components/ApiCalls'
+import { getUser,getUsersTopArtists,getUsersTopTracks, getCurrentPlayTrack } from './components/ApiCalls'
 function App() {
   // Constants for Spotify API endpoints and client information
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
@@ -26,6 +26,7 @@ function App() {
   const [userData, setUserData] = useState('');
   const [topArtists, setTopArtists] = useState('');
   const [topTracks, setTopTracks] = useState('');
+  const [currentTrack, setCurrentTrack] = useState('');
 
   /**
    * Runs on component mount to check for access token in URL hash or local storage.
@@ -81,9 +82,11 @@ function App() {
       const user = await getUser();
       const topArtists = await getUsersTopArtists();
       const topTracks = await getUsersTopTracks();
+      const currentTrack = await getCurrentPlayTrack();
       setUserData(user.data);
       setTopArtists(topArtists.data.items);
       setTopTracks(topTracks.data.items);
+      setCurrentTrack(currentTrack.item.album);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
