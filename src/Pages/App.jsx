@@ -82,11 +82,11 @@ function App() {
       const user = await getUser();
       const topArtists = await getUsersTopArtists();
       const topTracks = await getUsersTopTracks();
-      const currentTrack = await getCurrentPlayTrack();
+      // const currentTrack = await getCurrentPlayTrack();
       setUserData(user.data);
       setTopArtists(topArtists.data.items);
       setTopTracks(topTracks.data.items);
-      setCurrentTrack(currentTrack.item.album);
+      // setCurrentTrack(currentTrack.item.album);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -127,7 +127,7 @@ function App() {
     <div className="App">
       {token ? (
         <div>
-          <User info={userData}></User>
+          <User info={userData }></User>
           <div className="main">
             <div className="section">
               <h1>Top Artists</h1>

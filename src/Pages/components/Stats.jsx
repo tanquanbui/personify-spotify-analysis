@@ -31,11 +31,6 @@ const Stats = (props) => {
     <div>
       {artist && (
         <div className="genres">
-          {artist.genres.map((genre, index) => (
-            <div className="genre" key={index}>
-              <p>{genre}</p>
-            </div>
-          ))}
           <ArtistInfo artist={artist} />
         </div>
       )}
