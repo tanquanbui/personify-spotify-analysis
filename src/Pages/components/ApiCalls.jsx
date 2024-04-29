@@ -79,4 +79,4 @@ export const getAnAlbum = id => axios.get(`https://api.spotify.com/v1/albums/${i
 export const getAnAlbumsTracks = id => axios.get(`https://api.spotify.com/v1/albums/${id}/tracks`, {headers})
 /*----Currrent Play Track-----*/
 
-export const getCurrentPlayTrack = () => axios.get('https://api.spotify.com/v1/me/player/currently-playing')
+export const getCurrentPlayTrack = () => axios.get('https://api.spotify.com/v1/me/player/currently-playing', {headers})
