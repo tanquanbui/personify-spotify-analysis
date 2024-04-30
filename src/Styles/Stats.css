@@ -6,11 +6,3 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
-.genre{
-    margin: auto;
-    color: antiquewhite;
-    border-radius: 20%;
-    padding: 10px;
-
-    display: block;
-}

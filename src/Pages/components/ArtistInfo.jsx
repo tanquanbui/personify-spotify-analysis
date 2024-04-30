@@ -8,7 +8,7 @@ const ArtistInfo = ({ artist }) => {
         <h3>{name}</h3>
         <p>Popularity: {popularity}</p>
         {genres.map((genre, index) => (
-          <div key={index}>
+          <div className= "genre" key={index}>
             <p>{genre}</p>
           </div>
         ))}
