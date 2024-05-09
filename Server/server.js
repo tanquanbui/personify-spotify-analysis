@@ -1,11 +1,11 @@
 const express = require('express');
-const fetch = require('axios');
+const axios = require('axios');
 
 const app = express();
 
 const CLIENT_ID = '7f112c4cfe524c218620897ff68ecfc6';
 const CLIENT_SECRET = '306d676feec54b08a1570abb1d';
-const REDIRECT_URI = 'http://localhost:3000/'; // Your redirect URI
+const REDIRECT_URI = 'http://localhost:4000/callback'; // Your redirect URI
 
 // Route to initiate the login process
 app.get("/login", (req, res) => {
