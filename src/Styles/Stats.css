@@ -1,8 +1,26 @@
-.genres{
-    width: 100%;
+.genres, .albums, .top-tracks, .related-artists {
+    margin-top: 1em;
+    
+  }
+  
+  .albums ul, .top-tracks ul, .related-artists ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .albums li, .top-tracks li, .related-artists li {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
+    margin-bottom: 1em;
+  }
+  
+  .albums img, .related-artists img {
+    width: 50px;
+    height: 50px;
+    margin-right: 1em;
+  }
+.stats::-webkit-scrollbar {
+    display: none;
+
 }
+  

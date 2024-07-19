@@ -1,11 +1,19 @@
 import "../../Styles/Cards.css";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Stats from "./Stats";
+import TrackFeatures from "./TrackFeatures"
 
 const Card = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const cardRef = useRef(null);
   const { image, name, artists, id, apilink, token } = props;
+
+  useEffect(() => {
+    if (isOpen && cardRef.current) {
+      cardRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [isOpen]);
 
   const cleaner = (arr) => arr.map((solo) => solo.name).join(", ");
 
@@ -24,9 +32,11 @@ const Card = (props) => {
 
   return (
     <motion.div
-      whileHover={{ scale: isOpen ? 1 : 1.2 }} // Zoom effect on hover
+      ref={cardRef}
+      whileHover={{ scale: isOpen ? 1 : 1.1 }} // Zoom effect on hover
       transition={{ duration: 0.3 }}
       onClick={() => setIsOpen(!isOpen)}
+      className={`card-container ${isOpen ? 'expanded' : ''}`}
     >
       <AnimatePresence>
         {isOpen && (
@@ -35,6 +45,7 @@ const Card = (props) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.5 }}
+            className="fullscreen"
           >
             <motion.div
               className="expand"
@@ -46,14 +57,18 @@ const Card = (props) => {
               }}
               initial={{}}
             >
-                <img src={image} alt={name}></img>
-                <div className="titletext">
-                  <h1>{name}</h1>
-                  {Array.isArray(artists) && artists ? (
-                    <h3>{cleaner(artists)}</h3>
-                  ) : (
-                    <h3>{artists}</h3>
-                  )}
+              <div>
+              <img src={image} alt={name}></img>
+              <h1>{name}</h1>
+              {Array.isArray(artists) && artists ? (
+                  <h3>{cleaner(artists)}</h3>
+                ) : (
+                  <h3>{artists}</h3>
+                )}
+                <TrackFeatures token={token} trackId={id} apiLink={apilink} />
+              </div>
+              
+              <div className="titletext">
                 <Stats token={token} songid={id} apilink={apilink} />
               </div>
             </motion.div>
@@ -73,7 +88,7 @@ const Card = (props) => {
             <div className="images">
               <img src={image} alt={name}></img>
             </div>
-            <div className="titletext">
+            <div>
               <div className="titles">
                 <h1>{name}</h1>
                 {Array.isArray(artists) && artists ? (

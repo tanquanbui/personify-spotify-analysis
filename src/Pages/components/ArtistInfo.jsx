@@ -4,15 +4,20 @@ const ArtistInfo = ({ artist }) => {
   const { name, images, genres, popularity } = artist;
   return (
     <div className="artist-info">
+      <img src={images[0].url}></img>
       <div className="artist-info-details">
-        <h3>{name}</h3>
-        <p>Popularity: {popularity}</p>
-        {genres.map((genre, index) => (
+        <h1>{name}</h1>
+        <h2>Popularity: {popularity}</h2>
+        <div className="genres">
+          {genres.map((genre, index) => (
           <div className= "genre" key={index}>
-            <p>{genre}</p>
+            <h3>{genre}</h3>
           </div>
         ))}
-        <img src={images[0].url}></img>
+        </div>
+        
+        
+        <h1></h1>
       </div>
     </div>
   );
