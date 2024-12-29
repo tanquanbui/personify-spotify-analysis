@@ -40,6 +40,7 @@ const Dashboard = () => {
             const artists = response.data.items || [];
             setTopArtists(artists);
             calculateGenres(artists);
+            console.log(artists)
         } catch (error) {
             console.error('Error fetching top artists:', error.response || error.message);
             if (error.response?.status === 401) {
@@ -93,7 +94,8 @@ const Dashboard = () => {
                     <ul>
                         {topArtists.map((artist) => (
                             <li key={artist.id}>
-                                {artist.name} - Genres: {artist.genres.join(', ')}
+                                {artist.name}
+                                <img src={artist.images[0].url} alt={artist.name} />
                             </li>
                         ))}
                     </ul>
