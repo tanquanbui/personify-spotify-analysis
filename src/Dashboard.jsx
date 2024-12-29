@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import "./Styles/Genres.css"
 
 const Dashboard = () => {
     const [token, setToken] = useState(null);
@@ -75,13 +76,13 @@ const Dashboard = () => {
             {genres.length > 0 && (
                 <div>
                     <h2>Your Genres</h2>
-                    <ul>
+                    <div className='outsidegenre'>
                         {genres.map(({ genre, count }) => (
-                            <li key={genre}>
-                                {genre} ({count})
-                            </li>
+                            <div className='genre' key={genre}>
+                                {genre}
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 </div>
             )}
 
