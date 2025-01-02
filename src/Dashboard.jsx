@@ -8,6 +8,7 @@ const Dashboard = () => {
   const [topArtists, setTopArtists] = useState([]);
   const [genres, setGenres] = useState([]);
   const [gradientPosition, setGradientPosition] = useState(0);
+  const [artistTracks, setArtistTracks] = useState({});
 
   useEffect(() => {
     // Get token from URL hash or localStorage
@@ -56,6 +57,25 @@ const Dashboard = () => {
     }
   };
 
+  const fetchArtistTopTracks = async (artistId) => {
+    try {
+      const response = await axios.get(
+        `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=US`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      return response.data.tracks || [];
+    } catch (error) {
+      console.error(
+        `Error fetching top tracks for artist ${artistId}:`,
+        error.response || error.message
+      );
+      return [];
+    }
+  };
+
   const calculateGenres = (artists) => {
     const genreCount = {};
 
@@ -94,6 +114,16 @@ const Dashboard = () => {
     };
   }, []);
 
+  const handleArtistClick = async (artistId) => {
+    if (!artistTracks[artistId]) {
+      const tracks = await fetchArtistTopTracks(artistId);
+      setArtistTracks((prev) => ({
+        ...prev,
+        [artistId]: tracks,
+      }));
+    }
+  };
+
   return (
     <div>
       <h1>Dashboard</h1>
@@ -122,22 +152,33 @@ const Dashboard = () => {
           </div>
         )}
         {topArtists.length > 0 && (
-        <div>
-          <h2>Your Top Artists</h2>
-          <ul>
-            {topArtists.map((artist) => (
-              <li key={artist.id}>
-                {artist.name}
-                <img src={artist.images[0].url} alt={artist.name} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+          <div>
+            <h2>Your Top Artists</h2>
+            <div className="artists">
+              {topArtists.map((artist) => (
+                <div
+                  className="artist"
+                  key={artist.id}
+                  onClick={() => handleArtistClick(artist.id)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img src={artist.images[0].url} alt={artist.name} />
+                  <h2>{artist.name}</h2>
+                  {artistTracks[artist.id] && (
+                    <ul>
+                      {artistTracks[artist.id].map((track) => (
+                        <li key={track.id}>
+                          {track.name} - {track.album.name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Top Artists */}
-      
 
       {!token && <p>Please log in to view your dashboard.</p>}
     </div>
