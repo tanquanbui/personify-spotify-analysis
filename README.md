@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# 🎵 Personify Spotify Analysis
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A browser-based app that connects to your Spotify account to visualize and analyze your music preferences — built with Node.js and Axios, no backend server required.
 
-## Available Scripts
+## ✨ Overview
 
-In the project directory, you can run:
+This project uses the Spotify Web API to fetch user-specific data like top artists, tracks, genres, and audio features, all rendered directly in the browser. It's a lightweight, client-side tool built to explore your listening habits and discover patterns.
 
-### `npm start`
+> ⚠️ **Note**: Since everything runs in the browser and there is no background server, some data may not load immediately — you might need to **reload the page once** for full rendering.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🚀 Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 🔐 OAuth-based login with Spotify  
+- 📈 Visualize top artists, tracks, and genres  
+- 🎵 Analyze audio features such as danceability, energy, valence, and more  
+- 🔄 Pull data for different time ranges (short-term, medium-term, long-term)  
+- 💡 Minimal setup – no backend server needed  
 
-### `npm test`
+## 🛠️ Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Node.js** (for development setup and basic routing)  
+- **Axios** (for API calls)  
+- **Spotify Web API** (for user data)  
+- **Vanilla JS / HTML / CSS** or lightweight JS framework (depending on UI implementation)
 
-### `npm run build`
+## 🔧 Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. Clone the repository
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/tanquanbui/personify-spotify-analysis.git
+cd personify-spotify-analysis
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2. Install dependencies
 
-### `npm run eject`
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 3. Create a `.env` file in the root
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```env
+SPOTIFY_CLIENT_ID=your_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+REDIRECT_URI=http://localhost:8888/callback
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 4. Start the app
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm start
+```
 
-## Learn More
+Your browser should open at `http://localhost:8888`. Click "Log in with Spotify" to authorize access.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## ⚠️ Limitations
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- No backend server to cache or queue requests  
+- All logic and rendering happen client-side  
+- Some components may not load on first visit (due to rate limiting or async issues); a **manual refresh** often resolves this  
+- Limited error handling and retry mechanisms  
+- Rate limits from Spotify API may occasionally block requests  
 
-### Code Splitting
+## 📌 Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- This project is built for learning and demonstration purposes.  
+- If you want a smoother user experience or persistent storage, consider adding a backend (e.g., Node.js/Express) and database.
 
-### Analyzing the Bundle Size
+## 👨‍💻 Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Developed by [Quan Tan Bui](https://github.com/tanquanbui)  
+RMIT University – Focused on Software Engineering, Cloud Computing & Web Development
 
-### Making a Progressive Web App
+## 📄 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is open source and available under the [MIT License](LICENSE).
