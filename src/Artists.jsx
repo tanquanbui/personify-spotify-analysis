@@ -42,11 +42,6 @@ const Artists = ({ topArtists, token, setTimeRange }) => {
   return (
     <div>
       <h2>Your Top Artists</h2>
-      <div className="tabs">
-        <button onClick={() => setTimeRange("long_term")}>Long Term</button>
-        <button onClick={() => setTimeRange("medium_term")}>Medium Term</button>
-        <button onClick={() => setTimeRange("short_term")}>Short Term</button>
-      </div>
       <div className="artists">
         {topArtists.map((artist) => (
           <div

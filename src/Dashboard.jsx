@@ -56,6 +56,7 @@ const Dashboard = () => {
         alert("Token expired. Please log in again.");
         localStorage.removeItem("token");
         setToken(null);
+        logout();
       }
     }
   };
@@ -76,6 +77,7 @@ const Dashboard = () => {
         alert("Token expired. Please log in again.");
         localStorage.removeItem("token");
         setToken(null);
+        logout();
       }
     }
   };
@@ -105,7 +107,7 @@ const Dashboard = () => {
     setGradientPosition(scrollFraction * 100);
   };
 
-      const logout = () => {
+  const logout = () => {
         setToken(null);
         localStorage.removeItem("spotifyToken");
     };
@@ -119,6 +121,7 @@ const Dashboard = () => {
 
   return (
     <div>
+      {!token && <p>Please log in to view your dashboard.</p>}
       <div
         className="scroll-gradient"
         style={{
@@ -131,11 +134,9 @@ const Dashboard = () => {
         <div className="intro">
           <img className="logo" src={intro} alt="" />
         </div>
-        login
         <Genres genres={genres} setTimeRange={setGenreTimeRange} />
         <Artists topArtists={topArtists} token={token} setTimeRange={setArtistTimeRange} />
       </div>
-      {!token && <p>Please log in to view your dashboard.</p>}
     </div>
   );
 };

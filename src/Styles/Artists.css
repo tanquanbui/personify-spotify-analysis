@@ -26,12 +26,12 @@ border: 1px solid rgba(209, 209, 209, 0.12);
     margin: auto;
 }
 .tabs {
-    margin: auto;
+    width: 100%;
 }
 .tabs button{
+    margin: auto;
     font-size: 2rem;
-    margin-left: 2vw;
-    margin-right: 2vw;
+
     /* From https://css.glass */
 background: rgba(255, 255, 255, 0.36);
 border-radius: 1px;
