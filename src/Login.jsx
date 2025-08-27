@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
-const Login = () => {
+import "./Styles/Login.css"      
+  const Login = () => {
     const CLIENT_ID = "7f112c4cfe524c218620897ff68ecfc6";
     const REDIRECT_URI = "http://localhost:3000/callback";
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";

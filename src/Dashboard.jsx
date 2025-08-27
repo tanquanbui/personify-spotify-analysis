@@ -9,7 +9,8 @@ const Dashboard = () => {
   const [token, setToken] = useState(null);
   const [topArtists, setTopArtists] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [timeRange, setTimeRange] = useState("long_term");
+  const [artistTimeRange, setArtistTimeRange] = useState("long_term");
+  const [genreTimeRange, setGenreTimeRange] = useState("long_term");
   const [gradientPosition, setGradientPosition] = useState(0);
 
   useEffect(() => {
@@ -30,12 +31,18 @@ const Dashboard = () => {
     if (token) {
       fetchTopArtists();
     }
-  }, [token, timeRange]);
+  }, [token, artistTimeRange]);
+
+  useEffect(() => {
+    if (token) {
+      fetchTopGenres();
+    }
+  }, [token, genreTimeRange]);
 
   const fetchTopArtists = async () => {
     try {
       const response = await axios.get(
-        `https://api.spotify.com/v1/me/top/artists?time_range=${timeRange}`,
+        `https://api.spotify.com/v1/me/top/artists?time_range=${artistTimeRange}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -43,9 +50,28 @@ const Dashboard = () => {
 
       const artists = response.data.items || [];
       setTopArtists(artists);
-      calculateGenres(artists);
     } catch (error) {
       console.error("Error fetching top artists:", error.response || error.message);
+      if (error.response?.status === 401) {
+        alert("Token expired. Please log in again.");
+        localStorage.removeItem("token");
+        setToken(null);
+      }
+    }
+  };
+  const fetchTopGenres = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.spotify.com/v1/me/top/artists?time_range=${genreTimeRange}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const artists = response.data.items || [];
+      calculateGenres(artists);
+    } catch (error) {
+      console.error("Error fetching top genres:", error.response || error.message);
       if (error.response?.status === 401) {
         alert("Token expired. Please log in again.");
         localStorage.removeItem("token");
@@ -79,6 +105,11 @@ const Dashboard = () => {
     setGradientPosition(scrollFraction * 100);
   };
 
+      const logout = () => {
+        setToken(null);
+        localStorage.removeItem("spotifyToken");
+    };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -88,7 +119,6 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1>Dashboard</h1>
       <div
         className="scroll-gradient"
         style={{
@@ -98,9 +128,12 @@ const Dashboard = () => {
           transition: "background-position 0.1s ease-out",
         }}
       >
-        <img src={intro} alt="" />
-        <Genres genres={genres} setTimeRange={setTimeRange} />
-        <Artists topArtists={topArtists} token={token} setTimeRange={setTimeRange} />
+        <div className="intro">
+          <img className="logo" src={intro} alt="" />
+        </div>
+        login
+        <Genres genres={genres} setTimeRange={setGenreTimeRange} />
+        <Artists topArtists={topArtists} token={token} setTimeRange={setArtistTimeRange} />
       </div>
       {!token && <p>Please log in to view your dashboard.</p>}
     </div>
