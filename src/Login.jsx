@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./Styles/Login.css"      
   const Login = () => {
-    const CLIENT_ID = "7f112c4cfe524c218620897ff68ecfc6";
+    const CLIENT_ID = process.env.REACT_APP_CLIENT_ID || "YOUR_CLIENT_ID";
     const REDIRECT_URI = "http://localhost:3000/callback";
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
     const RESPONSE_TYPE = "token";

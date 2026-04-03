@@ -1,10 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 
 const app = express();
 
-const CLIENT_ID = '7f112c4cfe524c218620897ff68ecfc6';
-const CLIENT_SECRET = '306d676feec54b08a1570abb1d';
+const CLIENT_ID = process.env.CLIENT_ID || 'YOUR_CLIENT_ID';
+const CLIENT_SECRET = process.env.CLIENT_SECRET || 'YOUR_CLIENT_SECRET';
 const REDIRECT_URI = 'http://localhost:4000/callback'; // Your redirect URI
 
 // Route to initiate the login process
