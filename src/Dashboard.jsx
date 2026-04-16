@@ -109,7 +109,7 @@ const Dashboard = () => {
 
   const logout = () => {
         setToken(null);
-        localStorage.removeItem("spotifyToken");
+        localStorage.removeItem("token");
     };
 
   useEffect(() => {
