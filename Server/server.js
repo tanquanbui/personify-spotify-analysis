@@ -1,26 +1,26 @@
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');
 
 const app = express();
 
+app.use(cors());
+app.use(express.json());
+
 const CLIENT_ID = process.env.CLIENT_ID || 'YOUR_CLIENT_ID';
 const CLIENT_SECRET = process.env.CLIENT_SECRET || 'YOUR_CLIENT_SECRET';
-const REDIRECT_URI = 'http://localhost:4000/callback'; // Your redirect URI
+const REDIRECT_URI = 'http://localhost:3000/callback'; // Must rigidly match frontend
 
-// Route to initiate the login process
-app.get("/login", (req, res) => {
-    const scopes = 'user-read-private user-read-email'; // Specify the scopes you need
-    const authorizeUrl = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${encodeURIComponent(scopes)}`;
-    res.redirect(authorizeUrl);
-});
+// Endpoint to securely exchange the authorization code for an access token
+app.post("/api/exchange", async (req, res) => {
+    const { code } = req.body;
 
-// Callback route to handle the authorization code
-app.get("/callback", async (req, res) => {
-    const { code } = req.query;
+    if (!code) {
+        return res.status(400).json({ error: 'Code is required' });
+    }
 
     try {
-        // Exchange authorization code for access token
         const response = await axios.post('https://accounts.spotify.com/api/token', 
             new URLSearchParams({
                 grant_type: 'authorization_code',
@@ -33,15 +33,10 @@ app.get("/callback", async (req, res) => {
                 }
             });
 
-        const { access_token, refresh_token } = response.data;
-
-        // Now you have access_token and refresh_token, you can save them for subsequent requests
-        // Typically, you would associate them with the user who just logged in
-
-        res.send("Login successful! You can now access protected resources.");
+        res.json(response.data);
     } catch (error) {
-        console.error('Error exchanging authorization code for token:', error);
-        res.status(500).send('Internal Server Error');
+        console.error('Error exchanging authorization code for token:', error.response?.data || error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
