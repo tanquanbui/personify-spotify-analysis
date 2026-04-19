@@ -14,14 +14,15 @@ afterEach(() => {
 });
 
 describe('Login URL construction', () => {
-    test('login link encodes the redirect URI', () => {
+    test('login link includes the redirect URI unencoded so Spotify can match it', () => {
         render(<Login />);
         const link = screen.getByRole('link', { name: /login to spotify/i });
         const href = link.getAttribute('href');
 
-        // redirect_uri must be percent-encoded so the URL is well-formed
-        expect(href).toContain('redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback');
-        expect(href).not.toMatch(/redirect_uri=http:\/\//);
+        // Spotify matches the raw registered URI — sending it percent-encoded causes
+        // a "redirect_uri: Insecure" rejection even for localhost
+        expect(href).toContain('redirect_uri=http://localhost:3000/callback');
+        expect(href).not.toContain('redirect_uri=http%3A%2F%2F');
     });
 
     test('login link encodes all scopes (space becomes %20)', () => {

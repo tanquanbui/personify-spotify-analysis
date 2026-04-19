@@ -10,7 +10,7 @@ import "./Styles/Login.css"
     const [token, setToken] = useState(null);
     const [tokenExpiry, setTokenExpiry] = useState(null);
 
-    const loginUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPES)}`;
+    const loginUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPES)}`;
 
     useEffect(() => {
         // Check if the token is already stored in the URL hash
