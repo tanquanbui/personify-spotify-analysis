@@ -1,0 +1,33 @@
+.albums-container {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-x: auto;  /* Enable vertical scrolling */
+  }
+  
+  .albums {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .album {
+    margin: 10px;
+    width: 150px; /* Adjust width as needed */
+    text-align: center;
+  }
+  .album:hover{
+    transition-duration: 0.8s;
+    padding: 1em;
+    /* From https://css.glass */
+background: rgba(255, 255, 255, 0.87);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(4.2px);
+-webkit-backdrop-filter: blur(4.2px);
+border: 1px solid rgba(255, 255, 255, 0.28);
+  }
+  
+  .album img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  

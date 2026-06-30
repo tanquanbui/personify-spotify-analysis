@@ -1,0 +1,57 @@
+.albums-container {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: auto;  /* Enable vertical scrolling */
+  }
+  
+  .albums {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .album {
+    position: relative;
+    margin: 10px;
+    width: 150px; /* Adjust width as needed */
+    text-align: center;
+    transition: padding 0.8s ease-in-out, background 0.8s ease-in-out, box-shadow 0.8s ease-in-out, backdrop-filter 0.8s ease-in-out, border 0.8s ease-in-out;
+  }
+  
+  .album:hover {
+    padding: 1em;
+    background: rgba(255, 255, 255, 0.87);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.2px);
+    -webkit-backdrop-filter: blur(4.2px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+  }
+  
+  .album img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .album p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.87); /* Match hover background */
+    color: black; /* Use black text for better readability */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 0 0 16px 16px; /* Match the album's border radius */
+  }
+  
+  .album:hover p {
+    opacity: 1;
+  }
+  
+  .album:hover img {
+    opacity: 0.8;
+  }
+  
