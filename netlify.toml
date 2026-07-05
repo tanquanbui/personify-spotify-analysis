@@ -1,5 +1,6 @@
 [build]
   base = "."
+  command = "true"
   publish = "date-invite"
 
 [[headers]]
