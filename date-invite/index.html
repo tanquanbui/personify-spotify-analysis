@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A Date Quest 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sky">
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <div class="cloud cloud3"></div>
+  <div class="sun"></div>
+</div>
+<div class="field"></div>
+<div class="fence"></div>
+
+<div id="hearts-layer"></div>
+
+<main class="game">
+
+  <!-- SCREEN 1: intro -->
+  <section class="screen active" id="screen-intro">
+    <div class="sprite farmer">🧑‍🌾</div>
+    <div class="textbox">
+      <div class="textbox-name">??? </div>
+      <p class="typewriter" id="intro-text"></p>
+      <button class="pixel-btn advance" id="intro-advance">▶ Continue</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: the ask -->
+  <section class="screen" id="screen-ask">
+    <div class="sprite farmer bounce">🧑‍🌾</div>
+    <div class="textbox">
+      <div class="textbox-name">You've got a quest!</div>
+      <p>Will you go on a date with me? 💕</p>
+      <div class="choice-row">
+        <button class="pixel-btn yes-btn" id="yes-btn">💖 Yes!</button>
+        <button class="pixel-btn no-btn" id="no-btn">No</button>
+      </div>
+      <p class="hint" id="no-hint"></p>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: activities -->
+  <section class="screen" id="screen-activities">
+    <div class="textbox small">
+      <div class="textbox-name">Quest Log</div>
+      <p>Yay!! 🎉 Now help me plan &mdash; pick everything you're in the mood for:</p>
+    </div>
+    <div class="card-grid" id="card-grid">
+      <button class="card" data-label="Movie night 🎬">🎬<span>Movie night</span></button>
+      <button class="card" data-label="Picnic in the park 🧺">🧺<span>Picnic</span></button>
+      <button class="card" data-label="Cook dinner together 🍝">🍝<span>Cook together</span></button>
+      <button class="card" data-label="Go on a hike ⛰️">⛰️<span>Hike</span></button>
+      <button class="card" data-label="Board/video game night 🎮">🎮<span>Game night</span></button>
+      <button class="card" data-label="Coffee & bookshop crawl ☕">☕<span>Coffee & books</span></button>
+      <button class="card" data-label="Stargazing 🌌">🌌<span>Stargazing</span></button>
+      <button class="card" data-label="Museum or art gallery 🖼️">🖼️<span>Museum</span></button>
+      <button class="card" data-label="Try a new restaurant 🍜">🍜<span>New restaurant</span></button>
+    </div>
+    <button class="pixel-btn advance" id="activities-submit">✔ Send it!</button>
+  </section>
+
+  <!-- SCREEN 4: ending -->
+  <section class="screen" id="screen-end">
+    <div class="sprite farmer">🧑‍🌾💕🧑‍🦰</div>
+    <div class="textbox">
+      <div class="textbox-name">Quest Complete!</div>
+      <p id="summary-text"></p>
+      <p class="small-note">Can't wait, cutie. 🌻</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="confetti-layer" id="confetti-layer"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
