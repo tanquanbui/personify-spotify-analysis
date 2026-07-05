@@ -1,0 +1,9 @@
+[build]
+  base = "."
+  command = "true"
+  publish = "date-invite"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
