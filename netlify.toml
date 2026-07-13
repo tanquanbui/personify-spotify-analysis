@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[functions]
+  directory = "netlify/functions"
+
+# Proxy /api/* to Netlify Functions so the frontend uses relative paths with no CORS issues
+[[redirects]]
+  from = "/api/exchange"
+  to = "/.netlify/functions/exchange"
+  status = 200
+
+[[redirects]]
+  from = "/api/refresh"
+  to = "/.netlify/functions/refresh"
+  status = 200
+
+# SPA fallback — must be last so the rules above take priority
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

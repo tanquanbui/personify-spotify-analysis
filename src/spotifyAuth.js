@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
-
 const ACCESS_TOKEN_KEY = "spotify_access_token";
 const REFRESH_TOKEN_KEY = "spotify_refresh_token";
 const EXPIRY_KEY = "spotify_token_expiry";
@@ -54,7 +52,7 @@ export function isTokenExpired(expiry) {
 }
 
 export async function exchangeCodeForToken(code) {
-  const response = await axios.post(`${SERVER_URL}/api/exchange`, { code });
+  const response = await axios.post("/api/exchange", { code });
   storeTokens(response.data);
   return response.data;
 }
@@ -67,7 +65,7 @@ export async function refreshAccessToken() {
   }
 
   try {
-    const response = await axios.post(`${SERVER_URL}/api/refresh`, {
+    const response = await axios.post("/api/refresh", {
       refresh_token: refreshToken,
     });
     storeTokens(response.data);
