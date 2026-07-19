@@ -1,0 +1,47 @@
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.logout {
+  text-decoration: none;
+  width: 10vw;
+  background-color: 294C60;
+  backdrop-filter: blur(5px);
+  color: black;
+  padding: 30px 30px;
+  font-size: 1.2em;
+  transition-timing-function: ease-out;
+    transition: 0.25s;
+}
+.logout:hover {
+  border-radius: 30px;
+  transition-timing-function: ease-in;
+}
+.main {
+  width: 100%;
+  background-color: black;
+}
+.section {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  
+}
+.section h1 {
+  margin:0
+}
+.fixed {
+  position: fixed;
+}
+.background {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  font-size: 5em;
+  position: fixed;
+}
