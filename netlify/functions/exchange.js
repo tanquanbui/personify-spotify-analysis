@@ -2,7 +2,6 @@ const axios = require('axios');
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URI = process.env.REDIRECT_URI;
 
 const basicAuthHeader = 'Basic ' + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64');
 
@@ -11,16 +10,16 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const { code } = JSON.parse(event.body || '{}');
+  const { code, redirect_uri } = JSON.parse(event.body || '{}');
 
-  if (!code) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Code is required' }) };
+  if (!code || !redirect_uri) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'code and redirect_uri are required' }) };
   }
 
   try {
     const response = await axios.post(
       'https://accounts.spotify.com/api/token',
-      new URLSearchParams({ grant_type: 'authorization_code', code, redirect_uri: REDIRECT_URI }),
+      new URLSearchParams({ grant_type: 'authorization_code', code, redirect_uri }),
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
