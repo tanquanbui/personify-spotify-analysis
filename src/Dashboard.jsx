@@ -91,44 +91,50 @@ const Dashboard = () => {
     [token, logout]
   );
 
+  const [topTracks, setTopTracks] = useState([]);
+  const [recentTracks, setRecentTracks] = useState([]);
+  const [userProfile, setUserProfile] = useState(null);
+
   // Fetch all data once we have a token
   useEffect(() => {
     if (!token) return;
 
     const fetchAll = async () => {
       try {
-        // Top artists (all time) for the slides
-        const artistRes = await authorizedGet(
-          "https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=5"
-        );
-        setTopArtists(artistRes.data.items || []);
-
-        // Genres for all time ranges
-        const genreResults = await Promise.all(
-          TIME_RANGES.map((range) =>
+        const [artistRes, trackRes, recentTrackRes, profileRes, ...genreRaws] = await Promise.all([
+          authorizedGet("https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=5"),
+          authorizedGet("https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=5"),
+          authorizedGet("https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=50"),
+          authorizedGet("https://api.spotify.com/v1/me"),
+          ...TIME_RANGES.map((range) =>
             authorizedGet(`https://api.spotify.com/v1/me/top/artists?time_range=${range}`)
-              .then((res) => {
-                const artists = res.data.items || [];
-                const counts = {};
-                artists.forEach((a) =>
-                  (a.genres || []).forEach((g) => { counts[g] = (counts[g] || 0) + 1; })
-                );
-                return [
-                  range,
-                  Object.entries(counts)
-                    .sort((a, b) => b[1] - a[1])
-                    .map(([genre, count]) => ({ genre, count })),
-                ];
-              })
-          )
-        );
+          ),
+        ]);
 
-        const byRange = Object.fromEntries(genreResults);
-        setGenresByRange(byRange);
+        setTopArtists(artistRes.data.items || []);
+        setTopTracks(trackRes.data.items || []);
+        setRecentTracks(recentTrackRes.data.items || []);
+        setUserProfile(profileRes.data || null);
+
+        const genreResults = TIME_RANGES.map((range, i) => {
+          const artists = genreRaws[i].data.items || [];
+          const counts = {};
+          artists.forEach((a) =>
+            (a.genres || []).forEach((g) => { counts[g] = (counts[g] || 0) + 1; })
+          );
+          return [
+            range,
+            Object.entries(counts)
+              .sort((a, b) => b[1] - a[1])
+              .map(([genre, count]) => ({ genre, count })),
+          ];
+        });
+
+        setGenresByRange(Object.fromEntries(genreResults));
         setDataReady(true);
       } catch (err) {
         console.error("Data fetch failed:", err);
-        setDataReady(true); // Show slides even with partial data
+        setDataReady(true);
       }
     };
 
@@ -191,7 +197,10 @@ const Dashboard = () => {
   return (
     <WrappedSlides
       topArtists={topArtists}
+      topTracks={topTracks}
+      recentTracks={recentTracks}
       genresByRange={genresByRange}
+      userProfile={userProfile}
       onLogout={logout}
     />
   );
