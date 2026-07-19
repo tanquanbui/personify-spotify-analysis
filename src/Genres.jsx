@@ -44,7 +44,7 @@ export default function TimeRangeGenreBubbles({
     root.append("rect")
       .attr("x", 0).attr("y", 0)
       .attr("width", width).attr("height", height)
-      .attr("fill", "#eef7f0");
+      .attr("fill", "#0a0a0a");
 
     const zoomG = root.append("g");
 
@@ -64,16 +64,18 @@ export default function TimeRangeGenreBubbles({
 
     big.append("circle")
       .attr("r", R)
-      .attr("fill", "white")
-      .attr("stroke", "#334155")
-      .attr("stroke-width", 2)
-      .on("mouseover", function() { d3.select(this).attr("stroke-width", 3); })
-      .on("mouseout",  function() { d3.select(this).attr("stroke-width", 2); });
+      .attr("fill", "#1a1a1a")
+      .attr("stroke", "rgba(255,255,255,0.12)")
+      .attr("stroke-width", 1.5)
+      .on("mouseover", function() { d3.select(this).attr("stroke", "#1DB954").attr("stroke-width", 2); })
+      .on("mouseout",  function() { d3.select(this).attr("stroke", "rgba(255,255,255,0.12)").attr("stroke-width", 1.5); });
 
     big.append("text")
       .attr("text-anchor", "middle")
       .attr("dy", "0.35em")
-      .style("font", "16px system-ui, sans-serif")
+      .style("font", "bold 14px system-ui, sans-serif")
+      .style("fill", "#ffffff")
+      .style("letter-spacing", "0.05em")
       .text(d => d.label);
 
     // --- Bubbles inside each big circle
@@ -118,15 +120,20 @@ export default function TimeRangeGenreBubbles({
       const g = d3.select(this);
       const nodes = root.leaves();
 
+      const maxR = d3.max(nodes, n => n.r) || 1;
+      const colorScale = d3.scaleLinear()
+        .domain([0, maxR])
+        .range(["#0f2318", "#1DB954"]);
+
       g.selectAll("circle")
         .data(nodes)
         .join("circle")
         .attr("cx", n => n.x)
         .attr("cy", n => n.y)
         .attr("r",  n => n.r)
-        .attr("fill", "#e8ecf7")
-        .attr("stroke", "#1f2a44")
-        .attr("stroke-width", 1.2);
+        .attr("fill", n => colorScale(n.r))
+        .attr("stroke", "rgba(29,185,84,0.3)")
+        .attr("stroke-width", 1);
 
       g.selectAll("text")
         .data(nodes)
@@ -136,6 +143,7 @@ export default function TimeRangeGenreBubbles({
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
         .style("font", "11px system-ui, sans-serif")
+        .style("fill", "#ffffff")
         .style("pointer-events", "none")
         .text(n => n.data.name)
         .each(function(n) {

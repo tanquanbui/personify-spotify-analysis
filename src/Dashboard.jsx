@@ -15,6 +15,12 @@ import {
 
 const TIME_RANGES = ["long_term", "medium_term", "short_term"];
 
+const RANGE_LABELS = {
+  long_term: "All Time",
+  medium_term: "Last 6 Months",
+  short_term: "Last Month",
+};
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState(null);
@@ -23,7 +29,6 @@ const Dashboard = () => {
   const [genresByRange, setGenresByRange] = useState({});
   const [artistTimeRange, setArtistTimeRange] = useState("long_term");
   const [genreTimeRange, setGenreTimeRange] = useState("long_term");
-  const [gradientPosition, setGradientPosition] = useState(0);
 
   const logout = useCallback(() => {
     clearTokens();
@@ -31,8 +36,6 @@ const Dashboard = () => {
     navigate("/");
   }, [navigate]);
 
-  // Handle the redirect back from Spotify (?code=...&state=...), then fall
-  // back to whatever session is already in storage.
   useEffect(() => {
     const init = async () => {
       const params = new URLSearchParams(window.location.search);
@@ -72,7 +75,6 @@ const Dashboard = () => {
     init();
   }, []);
 
-  // Wraps a Spotify API GET call, retrying once with a refreshed token on 401.
   const authorizedGet = useCallback(
     async (url) => {
       try {
@@ -119,10 +121,9 @@ const Dashboard = () => {
         const sortedGenres = Object.entries(genreCount)
           .sort((a, b) => b[1] - a[1])
           .map(([genre, count]) => ({ genre, count }));
-
         setGenresByRange((prev) => ({ ...prev, [range]: sortedGenres }));
       } catch (error) {
-        console.error(`Error fetching top genres for ${range}:`, error.response || error.message);
+        console.error(`Error fetching genres for ${range}:`, error.response || error.message);
       }
     },
     [authorizedGet]
@@ -139,48 +140,68 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollFraction = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
-      setGradientPosition(scrollFraction * 100);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   if (authError) {
     return (
-      <div>
+      <div className="dashboard-error">
         <p>{authError}</p>
-        <button onClick={() => navigate("/")}>Back to login</button>
+        <button className="btn-primary" onClick={() => navigate("/")}>Back to Login</button>
+      </div>
+    );
+  }
+
+  if (!token) {
+    return (
+      <div className="dashboard-empty">
+        <p>No session found.</p>
+        <button className="btn-primary" onClick={() => navigate("/")}>Log in with Spotify</button>
       </div>
     );
   }
 
   return (
-    <div>
-      {!token && <p>Please log in to view your dashboard.</p>}
-      <div
-        className="scroll-gradient"
-        style={{
-          background: `linear-gradient(270deg, #ff7e5f, #feb47b, #86a8e7, #91eae4)`,
-          backgroundSize: "400% 400%",
-          backgroundPosition: `${gradientPosition}% 50%`,
-          transition: "background-position 0.1s ease-out",
-        }}
-      >
-        <div className="intro">
-          <img className="logo" src={intro} alt="" />
+    <div className="dashboard">
+      <nav className="dashboard-nav">
+        <span className="dashboard-nav-title">Personify</span>
+        <button className="btn-logout" onClick={logout}>Disconnect</button>
+      </nav>
+
+      <div className="dashboard-hero">
+        <img className="logo" src={intro} alt="Personify" />
+      </div>
+
+      <div className="section-divider" />
+
+      <div className="dashboard-section">
+        <div className="section-header">
+          <h2 className="section-title">Top Genres</h2>
+          <p className="section-subtitle">Your most-listened genres across different time periods</p>
         </div>
         <Genres
           genresByRange={genresByRange}
           timeRange={genreTimeRange}
           setTimeRange={setGenreTimeRange}
         />
-        <Artists topArtists={topArtists} token={token} setTimeRange={setArtistTimeRange} />
+      </div>
+
+      <div className="section-divider" />
+
+      <div className="dashboard-section">
+        <div className="section-header">
+          <h2 className="section-title">Top Artists</h2>
+          <p className="section-subtitle">Click an artist to see their top tracks</p>
+        </div>
+        <div className="time-range-pills">
+          {TIME_RANGES.map((range) => (
+            <button
+              key={range}
+              className={`time-range-pill${artistTimeRange === range ? " active" : ""}`}
+              onClick={() => setArtistTimeRange(range)}
+            >
+              {RANGE_LABELS[range]}
+            </button>
+          ))}
+        </div>
+        <Artists topArtists={topArtists} token={token} />
       </div>
     </div>
   );
