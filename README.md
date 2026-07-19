@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Personify
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A Spotify Wrapped-style story experience for your music taste — built with React, framer-motion, and the Spotify Web API.
 
-## Available Scripts
+## What it does
 
-In the project directory, you can run:
+After logging in with Spotify, you get a full-screen animated slide deck showing:
 
-### `npm start`
+- **Your top 5 artists** — full-bleed photo, genre tags, follower count
+- **Your top 5 tracks** — album art, artist, album name
+- **Genre breakdown** — all-time and recently (short-term)
+- **Mainstream score** — average popularity of your top artists and tracks
+- **Musical range** — all-time vs recent genre count comparison
+- Personalized with your Spotify display name and avatar
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Every artist and track slide auto-extracts the dominant color from the image and builds a unique dark background + vivid accent from it. Genre slides pick a palette based on the genre (hip-hop → gold, pop → pink, EDM → cyan, jazz → indigo, etc.).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech stack
 
-### `npm test`
+- React (Create React App)
+- framer-motion — slide transitions and staggered text animations
+- Spotify Web API — Authorization Code flow with PKCE-style state validation
+- Netlify Functions — serverless token exchange and refresh (no exposed secrets)
+- D3 — genre bubble visualization (legacy view)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Local development
 
-### `npm run build`
+1. Clone the repo
+2. Copy `.env.example` to `.env.local` and fill in your values:
+   ```
+   REACT_APP_CLIENT_ID=your_spotify_client_id
+   REACT_APP_REDIRECT_URI=http://localhost:3000/callback
+   ```
+3. Set the same values as environment variables for the Netlify Functions:
+   ```
+   CLIENT_ID=your_spotify_client_id
+   CLIENT_SECRET=your_spotify_client_secret
+   REDIRECT_URI=http://localhost:3000/callback
+   ```
+4. Install and run:
+   ```bash
+   npm install
+   npm start
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The dev server proxies `/api/*` requests to `http://localhost:4000`. To run the functions locally, use the [Netlify CLI](https://docs.netlify.com/cli/get-started/):
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npx netlify dev
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deployment (Netlify)
 
-### `npm run eject`
+1. Connect the repo to Netlify
+2. Set these environment variables in **Netlify → Site settings → Environment variables**:
+   - `CLIENT_ID` — your Spotify app client ID
+   - `CLIENT_SECRET` — your Spotify app client secret
+   - `REDIRECT_URI` — e.g. `https://your-site.netlify.app/callback`
+   - `REACT_APP_CLIENT_ID` — same as `CLIENT_ID`
+   - `REACT_APP_REDIRECT_URI` — same as `REDIRECT_URI`
+3. Register your `REDIRECT_URI` in the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+4. Deploy — Netlify will run `npm ci && npm run build` automatically
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Required Spotify scopes
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `user-top-read` — top artists and tracks
+- `user-read-private` — display name and avatar
