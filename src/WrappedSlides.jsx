@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Styles/Wrapped.css";
 
@@ -458,7 +458,32 @@ export default function WrappedSlides({ topArtists, topTracks, recentTracks, gen
     return () => window.removeEventListener("keydown", onKey);
   }, [go]);
 
+  // Touch swipe detection
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
+  const didSwipe = useRef(false);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    didSwipe.current = false;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    // only count as swipe if horizontal movement dominates and exceeds threshold
+    if (Math.abs(dx) > Math.abs(dy) * 1.3 && Math.abs(dx) > 48) {
+      didSwipe.current = true;
+      go(dx < 0 ? 1 : -1);
+    }
+    touchStartX.current = null;
+  };
+
   const handleClick = (e) => {
+    // ignore click that was the end of a swipe
+    if (didSwipe.current) { didSwipe.current = false; return; }
     const x = e.clientX;
     const w = window.innerWidth;
     go(x > w / 2 ? 1 : -1);
@@ -467,7 +492,12 @@ export default function WrappedSlides({ topArtists, topTracks, recentTracks, gen
   const slide = slides[index];
 
   return (
-    <div className="ws-root" onClick={handleClick}>
+    <div
+      className="ws-root"
+      onClick={handleClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Progress segments */}
       <div className="ws-progress">
         {slides.map((_, i) => (
