@@ -4,9 +4,13 @@ import "./Styles/Login.css";
 import { generateAndStoreState, getStoredTokens, isTokenExpired, clearTokens } from "./spotifyAuth";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID || "YOUR_CLIENT_ID";
-const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI || "http://localhost:3000/callback";
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
-const SCOPES = "user-top-read playlist-read-private";
+const SCOPES = "user-top-read user-read-private";
+
+// Derived at runtime so it's always correct on any host (Netlify, localhost, etc.)
+function getRedirectUri() {
+  return `${window.location.origin}/callback`;
+}
 
 const SpotifyIcon = () => (
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -25,10 +29,11 @@ const Login = () => {
 
   const handleLogin = () => {
     const state = generateAndStoreState();
+    const redirectUri = getRedirectUri();
     const params = new URLSearchParams({
       client_id: CLIENT_ID,
       response_type: "code",
-      redirect_uri: REDIRECT_URI,
+      redirect_uri: redirectUri,
       scope: SCOPES,
       state,
     });

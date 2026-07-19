@@ -52,7 +52,8 @@ export function isTokenExpired(expiry) {
 }
 
 export async function exchangeCodeForToken(code) {
-  const response = await axios.post("/api/exchange", { code });
+  const redirectUri = `${window.location.origin}/callback`;
+  const response = await axios.post("/api/exchange", { code, redirect_uri: redirectUri });
   storeTokens(response.data);
   return response.data;
 }
