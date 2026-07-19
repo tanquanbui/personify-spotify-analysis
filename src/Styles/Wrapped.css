@@ -24,7 +24,7 @@
 .ws-progress-seg {
   flex: 1;
   height: 3px;
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -34,6 +34,7 @@
   height: 100%;
   transform-origin: left;
   border-radius: 2px;
+  background: rgba(255, 255, 255, 0.85);
 }
 
 /* ── Slide base ── */
@@ -189,6 +190,70 @@
 .ws-g4 { font-size: clamp(1.3rem, 4.5vw, 2.25rem); }
 .ws-g5 { font-size: clamp(1.1rem, 3.5vw, 1.8rem); }
 
+/* ── Artist followers ── */
+.ws-artist-followers {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0.5rem 0 0;
+}
+
+/* ── Track album label ── */
+.ws-track-album {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin: 0.4rem 0 0;
+  text-transform: uppercase;
+}
+
+/* ── User avatar ── */
+.ws-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Diversity slide ── */
+.ws-diversity-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.ws-diversity-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ws-diversity-num {
+  font-family: 'Questrial', sans-serif;
+  font-size: clamp(4rem, 16vw, 8rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.ws-diversity-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.ws-diversity-divider {
+  width: 2px;
+  height: 80px;
+  border-radius: 2px;
+  opacity: 0.4;
+}
+
 /* ── Nav hints ── */
 .ws-nav-hint {
   position: absolute;
@@ -201,6 +266,7 @@
   pointer-events: none;
   z-index: 100;
   font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* ── Logout / disconnect btn ── */
